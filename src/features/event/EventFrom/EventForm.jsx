@@ -7,20 +7,20 @@ export default class EventForm extends Component {
         date:'',
         place:'',
         city:'',
-        hostBy:''
+        hostedBy:''
     }
     handleFormSubmit = (event) => {
         event.preventDefault();
-        console.log(this.state)
+        this.props.createEvent(this.state)
     }
-    handleChange = (event) => {
+    handleChange = ({target:{name,value}}) => {
         this.setState({
-            [event.target.name]: event.target.value
+            [name]: value
         })
     }
     render() {
         const { cancelFormOpen } = this.props
-        const { title,date,place,city,hostBy} = this.state
+        const { title,date,place,city,hostedBy} = this.state
         return (
             <Segment>
                 <Form onSubmit={this.handleFormSubmit}>
@@ -42,7 +42,7 @@ export default class EventForm extends Component {
                     </Form.Field>
                     <Form.Field>
                         <label>Hosted By</label>
-                        <input placeholder="Enter the name of person hosting" onChange={this.handleChange} value={hostBy} name='hostBy'/>
+                        <input placeholder="Enter the name of person hosting" onChange={this.handleChange} value={hostedBy} name='hostedBy'/>
                     </Form.Field>
                     <Button positive type="submit">
                         Submit

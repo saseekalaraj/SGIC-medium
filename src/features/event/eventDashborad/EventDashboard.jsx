@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { Grid, Button } from 'semantic-ui-react'
 import EventList from '../EventList/EventList'
 import EventForm from '../EventFrom/EventForm'
+import cuid from 'cuid'
 
 const events = [
     {
@@ -58,7 +59,8 @@ export default class extends Component {
     constructor() {
         super()
         this.state = {
-            isOpen: false
+            isOpen: false,
+            events:events
         }
         this.handleOpen = this.handleOpen.bind(this)
     }
@@ -67,8 +69,16 @@ export default class extends Component {
             isOpen: !prvState.isOpen
         }))
     }
+    handleCreateEvent=(newEvent)=>{
+        newEvent.id=cuid()
+        newEvent.hostPhotoURL = 'https://randomuser.me/api/portraits/men/20.jpg'
+        this.setState(({events})=>({
+            events:[...events,newEvent]
+        }))
+        console.log(newEvent)
+    }
     render() {
-        const { isOpen } = this.state
+        const { isOpen,events } = this.state
         return (
             <Grid>
                 <Grid.Column width={10}>
@@ -76,7 +86,7 @@ export default class extends Component {
                 </Grid.Column>
                 <Grid.Column width={6}>
                     <Button positive content='Create Event' onClick={this.handleOpen} />
-                    {isOpen && <EventForm cancelFormOpen={this.handleOpen} />}
+                    {isOpen && <EventForm cancelFormOpen={this.handleOpen} createEvent={this.handleCreateEvent} />}
                 </Grid.Column>
             </Grid>
         )
