@@ -60,7 +60,7 @@ export default class extends Component {
         super()
         this.state = {
             isOpen: false,
-            events:events
+            events: events
         }
         this.handleOpen = this.handleOpen.bind(this)
     }
@@ -69,16 +69,16 @@ export default class extends Component {
             isOpen: !prvState.isOpen
         }))
     }
-    handleCreateEvent=(newEvent)=>{
-        newEvent.id=cuid()
+    handleCreateEvent = (newEvent) => {
+        newEvent.id = cuid()
         newEvent.hostPhotoURL = 'https://randomuser.me/api/portraits/men/20.jpg'
-        this.setState(({events})=>({
-            events:[...events,newEvent]
+        this.setState(({ events }) => ({
+            events: [...events, newEvent]
         }))
         console.log(newEvent)
     }
     render() {
-        const { isOpen,events } = this.state
+        const { isOpen, events } = this.state
         return (
             <Grid>
                 <Grid.Column width={10}>
