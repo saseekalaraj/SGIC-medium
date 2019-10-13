@@ -5,22 +5,34 @@ export default class EventForm extends Component {
     state = {
         title: '',
         date: '',
-        place: '',
+        venue: '',
         city: '',
         hostedBy: ''
     }
     handleFormSubmit = (event) => {
         event.preventDefault();
-        this.props.createEvent(this.state)
+        if(this.state.id){
+            this.props.updatedEvent(this.state)
+        }else{
+            this.props.createEvent(this.state)
+        }
     }
     handleChange = ({ target: { name, value } }) => {
         this.setState({
             [name]: value
         })
     }
+    componentDidMount() {
+        if (this.props.selectedEvent !== null) {
+            this.setState({
+                ...this.props.selectedEvent
+            })
+
+        }
+    }
     render() {
         const { cancelFormOpen } = this.props
-        const { title, date, place, city, hostedBy } = this.state
+        const { title, date, venue, city, hostedBy } = this.state
         return (
             <Segment>
                 <Form onSubmit={this.handleFormSubmit}>
@@ -38,7 +50,7 @@ export default class EventForm extends Component {
                     </Form.Field>
                     <Form.Field>
                         <label>Venue</label>
-                        <input placeholder="Enter the Venue of the event" onChange={this.handleChange} value={place} name='place' />
+                        <input placeholder="Enter the Venue of the event" onChange={this.handleChange} value={venue} name='venue' />
                     </Form.Field>
                     <Form.Field>
                         <label>Hosted By</label>
